@@ -6,32 +6,43 @@ document.body.appendChild(canvas)
 
 var ctx = canvas.getContext("2d")
 
-var y = 0
+
 const chars = "ﾊﾐﾋｰｳｼﾅﾓﾆｻﾜﾂｵﾘｱﾎﾃﾏｹﾒｴｶｷﾑﾕﾗｾﾈｽﾀﾇﾍ";
-function drow() {
-    if (y > canvas.height) {
-        y = 0
+const cellSizeInPx = 35;
+const columsCount = canvas.width/cellSizeInPx
+const rowsCount =canvas.height/cellSizeInPx
+
+    const cols=[];
+    for (let col = 0; col < columsCount; col+=1) {
+        let randomRow = getRandomInt(rowsCount);
+        cols.push(randomRow)
     }
-    y += 50
+
+
+function drow() {
+   
     blackTush()
-    for (let x = 0; x < canvas.width; x+=50) {
-        writeASimvol(x) 
-        
+    for (let colIndex = 0; colIndex < cols.length; colIndex+=1) {
+      if (cols[colIndex]>rowsCount) {
+        cols[colIndex]=0
+      }
+      cols[colIndex]+=1
+      writeASimvol(colIndex*cellSizeInPx,cols[colIndex]*cellSizeInPx)
     }
     
 }
 
-function writeASimvol(x) {
+function writeASimvol(x,y) {
     ctx.fillStyle = "#0F0"
-    ctx.font = "50px serif"
+    ctx.font = `${cellSizeInPx * 1.4}px serif`;
     ctx.fillText(randomMatrixSimbol(), x, y);
 }
 function blackTush() {
-    ctx.fillStyle = "rgba(0,0,0,0.2)"
+    ctx.fillStyle = "rgba(0,0,0,0.15)"
     ctx.fillRect(0, 0, canvas.width, canvas.height)
 }
 
-setInterval(drow, 500)
+setInterval(drow, 200)
 function randomMatrixSimbol() {
 
     const randomCharsIndex = getRandomInt(chars.length)
