@@ -24,7 +24,7 @@ function drow() {
     blackTush()
     for (let colIndex = 0; colIndex < cols.length; colIndex+=1) {
       if (cols[colIndex]>rowsCount) {
-        cols[colIndex]=0
+        cols[colIndex]=-getRandomInt(rowsCount/4)
       }
       cols[colIndex]+=1
       writeASimvol(colIndex*cellSizeInPx,cols[colIndex]*cellSizeInPx)
